@@ -67,22 +67,17 @@ namespace GIFserver
         {
             if (e.Cancelled)
             {
-                //Thread.Sleep(1000);
-              //  this.listener.Stop();
                 Console.WriteLine("Server Stopped");
             }
             Report();
         }
         private void HandleRequest(object? objContext)
         {
-            //ManualResetEvent requestValid=new ManualResetEvent(false);
             HttpListenerContext context=(HttpListenerContext)objContext;
-            Verify(context);//,requestValid);
-           
-
+            Verify(context);
         }
 
-        private void Verify(HttpListenerContext context)//, ManualResetEvent resetEvent)
+        private void Verify(HttpListenerContext context)
         {
             string gifName=string.Empty;
             bool valid = true;
@@ -186,7 +181,7 @@ namespace GIFserver
 
         }
 
-        private void Loggs(object? instance)//valid,found, inCache
+        private void Loggs(object? instance)
         {
             string text = String.Empty;
             object[] objects=instance as object[];
@@ -259,8 +254,16 @@ namespace GIFserver
                     <head><title>Bad Request</title></head>
                     <body>Bad request was made</body>
                                 </html>";
-                response.OutputStream.Write(Encoding.ASCII.GetBytes(body));
-                response.Close();
+                try
+                {
+                    response.OutputStream.Write(Encoding.ASCII.GetBytes(body));
+                    response.Close();
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                    return;
+                }
                 return;
             }
             else
@@ -271,8 +274,16 @@ namespace GIFserver
                     <head><title>Not Found</title></head>
                     <body>Gif Not Found</body>
                                 </html>";
-                response.OutputStream.Write(Encoding.ASCII.GetBytes(body));
-                response.Close();
+                try
+                {
+                    response.OutputStream.Write(Encoding.ASCII.GetBytes(body));
+                    response.Close();
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                    return;
+                }
                 return;
             }
             else
@@ -280,8 +291,16 @@ namespace GIFserver
             {
                 response.ContentType = "image/gif";
                 response.ContentLength64 = len;
-                response.OutputStream.Write(content);
-                response.Close();
+                try
+                {
+                    response.OutputStream.Write(content);
+                    response.Close();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                    return;
+                }
                 return;
             }
            
