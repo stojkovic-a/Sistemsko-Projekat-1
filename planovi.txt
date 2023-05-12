@@ -1,9 +1,0 @@
-lock prilikom pristupa kesu za pisanje, mozda readerWriterLockSLim
-
-
-handle zzahtev preko QueueUserWorkItem//done
-
-
-ostali delovi handle koda cekaju da verify zavrsi preko register wait for Singel object//nope 
-
-////////////// sta ako nikad ne signaliziram  u registerwaitforsingleobject
